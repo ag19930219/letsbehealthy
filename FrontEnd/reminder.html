@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta charset="UTF-8">
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+	<link href="css/all.css" rel="stylesheet">
+	<title>藥記得</title>
+  <script type="text/javascript">
+  var edit_index;
+  var jsonString = window.localStorage.getItem('reminder_all');
+  var reminder_all = JSON.parse(jsonString);
+  console.log(reminder_all);
+  if (reminder_all===null || typeof(reminder_all)!=='object') {
+    // 輸出 Log 與建立資料庫
+      console.log('Create Local Storage.');
+      var reminder_all = [];
+      var jsonString = JSON.stringify(reminder_all);
+      window.localStorage.setItem('reminder_all', jsonString);
+  }else{
+    console.log('資料存在.');
+  }
+  $(document).ready(function(){
+    for (var flag = 0; flag < reminder_all.length; flag++){
+      var tmp="";
+      tr = $('<tr/>');                
+      tr.append("<td>" + reminder_all[flag].Name + "</td>");
+      tr.append("<td>" + reminder_all[flag].quantity + " " + reminder_all[flag].unit + "</td>");
+      tr.append("<td>" + reminder_all[flag].Time + "</td>");
+      if(reminder_all[flag].MON == 1){
+        tmp="一";
+      }
+      if(reminder_all[flag].TUE == 1){
+        tmp=tmp+"二";
+      }
+      if(reminder_all[flag].WED == 1){
+        tmp=tmp+"三";
+      }
+      if(reminder_all[flag].THU == 1){
+        tmp=tmp+"四";
+      }
+      if(reminder_all[flag].FRI == 1){
+        tmp=tmp+"五";
+      }
+      if(reminder_all[flag].SAT == 1){
+        tmp=tmp+"六";
+      }
+      if(reminder_all[flag].SUN == 1){
+        tmp=tmp+"日";
+      }
+      tr.append("<td>" + tmp + "</td>"); 
+      tr.append("<button type='button' class='btn btn-default' data-toggle='modal' data-target='#edit' onclick='present("+ flag +");'>修改</button>");
+      $('#reminder_all').append(tr);
+      $('#reminder_all').append('</tbody>');
+    }
+    for (var flag = 0; flag < reminder_all.length; flag++){
+      var tmp="";
+      tr = $('#reminder_all2');                
+      if(reminder_all[flag].MON == 1){
+        var MON = "<span class='reminder_yellow'>一</span>";
+      }else{
+        var MON = "<span class='reminder_black'>一</span>";
+      }
+      if(reminder_all[flag].TUE == 1){
+        var TUE = "<span class='reminder_yellow'>二</span>";
+      }else{
+        var TUE = "<span class='reminder_black'>二</span>";
+      }
+      if(reminder_all[flag].WED == 1){
+        var WED = "<span class='reminder_yellow'>三</span>";
+      }else{
+        var WED = "<span class='reminder_black'>三</span>";
+      }
+      if(reminder_all[flag].THU == 1){
+        var THU = "<span class='reminder_yellow'>四</span>";
+      }else{
+        var THU = "<span class='reminder_black'>四</span>";
+      }
+      if(reminder_all[flag].FRI == 1){
+        var FRI = "<span class='reminder_yellow'>五</span>";
+      }else{
+        var FRI = "<span class='reminder_black'>五</span>";
+      }
+      if(reminder_all[flag].SAT == 1){
+        var SAT = "<span class='reminder_yellow'>六</span>";
+      }else{
+        var SAT = "<span class='reminder_black'>六</span>";
+      }
+      if(reminder_all[flag].SUN == 1){
+        var SUN = "<span class='reminder_yellow'>日</span>";
+      }else{
+        var SUN = "<span class='reminder_black'>日</span>";
+      }
+
+      if(reminder_all[flag].unit == "包"){
+        var unit_1 = "<div class='reminder_unit_Y'>包</div>";
+      }else{
+        var unit_1 = "<div class='reminder_unit_N'>包</div>";
+      }
+
+      if(reminder_all[flag].unit == "顆"){
+        var unit_2 = "<div class='reminder_unit_Y'>顆</div>";
+      }else{
+        var unit_2 = "<div class='reminder_unit_N'>顆</div>";
+      }
+
+      if(reminder_all[flag].unit == "匙"){
+        var unit_3 = "<div class='reminder_unit_Y'>匙</div>";
+      }else{
+        var unit_3 = "<div class='reminder_unit_N'>匙</div>";
+      }
+
+      if(reminder_all[flag].unit == "瓶"){
+        var unit_4 = "<div class='reminder_unit_Y'>瓶</div>";
+      }else{
+        var unit_4 = "<div class='reminder_unit_N'>瓶</div>";
+      }
+
+      if(reminder_all[flag].unit == "cc"){
+        var unit_5 = "<div class='reminder_unit_Y'>cc</div>";
+      }else{
+        var unit_5 = "<div class='reminder_unit_N'>cc</div>";
+      }
+      tr.append("<div class='reminder_block'><div class='reminder_block_left'><div class='reminder_Name'>" + reminder_all[flag].Name + "</div><div class='reminder_Day'>"+MON+TUE+WED+THU+FRI+SAT+SUN+"</div><div class='reminder_bottom'><div class='reminder_quantity'>"+ reminder_all[flag].quantity +"</div>"+unit_1+unit_2+unit_3+unit_4+unit_5+"</div></div><div class='reminder_block_right'><div class='reminder_Time'>" + reminder_all[flag].Time + "</div><img src='images/edit.png' style='width:10vh; margin-top:2vh;' data-toggle='modal' data-target='#edit' onclick='present("+ flag +");'><img src='images/delete.png' style='width:8vh; margin-top:2vh;' data-toggle='modal' data-target='#delete_modal' onclick='test("+ flag +");'></div></div>");
+    }
+  });
+  function present(value){
+    edit_index = value;
+    for ( var flag = 0; flag < reminder_all.length; flag++){
+      if (flag == edit_index){
+        $('#Name_edit').val(reminder_all[flag].Name);
+        $('#quantity_edit').val(reminder_all[flag].quantity);
+        $('#unit_edit').val(reminder_all[flag].unit);
+        $('#Time_edit').val(reminder_all[flag].Time);
+        if(reminder_all[flag].MON==1){
+          $("#MON_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].TUE==1){
+          $("#TUE_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].WED==1){
+          $("#WED_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].THU==1){
+          $("#THU_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].FRI==1){
+          $("#FRI_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].SAT==1){
+          $("#SAT_edit").prop( "checked", true);
+        }
+        if(reminder_all[flag].SUN==1){
+          $("#SUN_edit").prop( "checked", true);
+        }
+      }
+    }
+    $('#old_edit').click(function(){
+      old_edit(value);
+    });
+  }
+
+  $(function () { $('#edit').on('hide.bs.modal', function () {
+      $('#Name_edit').val(null);
+      $('#quantity_edit').val(null);
+      $('#unit_edit').val(null);
+      $('#Time_edit').val(null);
+      $("#MON_edit").prop( "checked", false);
+      $("#TUE_edit").prop( "checked", false);
+      $("#WED_edit").prop( "checked", false);
+      $("#THU_edit").prop( "checked", false);
+      $("#FRI_edit").prop( "checked", false);
+      $("#SAT_edit").prop( "checked", false);
+      $("#SUN_edit").prop( "checked", false);
+    })
+   });
+  function old_edit(value){
+    var Name = $('#Name_edit').val();
+    var quantity = $('#quantity_edit').val();
+    var unit = $('#unit_edit').val();
+    var Time = $('#Time_edit').val();
+    var MON = $('#MON_edit').prop('checked');
+    var TUE = $('#TUE_edit').prop('checked');
+    var WED = $('#WED_edit').prop('checked');
+    var THU = $('#THU_edit').prop('checked');
+    var FRI = $('#FRI_edit').prop('checked');
+    var SAT = $('#SAT_edit').prop('checked');
+    var SUN = $('#SUN_edit').prop('checked');
+    if(Name == '' || quantity == null || unit == null || Time == ''){
+      alert("請將欄位補齊");
+    }else{
+      if(MON != false || TUE != false || WED != false || THU != false || FRI != false || SAT != false || SUN != false){
+        reminder_all[value].Name = $('#Name_edit').val();
+        reminder_all[value].quantity = $('#quantity_edit').val();
+        reminder_all[value].unit = $('#unit_edit').val();
+        reminder_all[value].Time = $('#Time_edit').val();
+        reminder_all[value].MON = $('#MON_edit').prop('checked');
+        reminder_all[value].TUE = $('#TUE_edit').prop('checked');
+        reminder_all[value].WED = $('#WED_edit').prop('checked');
+        reminder_all[value].THU = $('#THU_edit').prop('checked');
+        reminder_all[value].FRI = $('#FRI_edit').prop('checked');
+        reminder_all[value].SAT = $('#SAT_edit').prop('checked');
+        reminder_all[value].SUN = $('#SUN_edit').prop('checked');
+        window.localStorage.setItem('reminder_all', JSON.stringify(reminder_all));
+        location.reload();
+      }else{
+        alert("請將欄位補齊");
+      }
+    }
+  }
+  function old_delete(value){
+    console.log(value);
+    reminder_all.splice(value,1);
+    window.localStorage.setItem('reminder_all', JSON.stringify(reminder_all));
+    location.reload();
+  }
+  function test(value){
+    $('#old_delete').click(function(){
+      old_delete(value);
+    });
+    $('#cancel').click(function(){
+      $('#old_delete').unbind();
+    });
+  }
+  function addnew(){
+    var newContact = {};
+    newContact.Name = $('#Name').val();
+    newContact.quantity = $('#quantity').val();
+    newContact.unit = $('#unit').val();
+    newContact.Time = $('#Time').val();
+    newContact.MON = $('#MON').prop('checked');
+    newContact.TUE = $('#TUE').prop('checked');
+    newContact.WED = $('#WED').prop('checked');
+    newContact.THU = $('#THU').prop('checked');
+    newContact.FRI = $('#FRI').prop('checked');
+    newContact.SAT = $('#SAT').prop('checked');
+    newContact.SUN = $('#SUN').prop('checked');
+    if(Name == '' || quantity == null || unit == null || Time == ''){
+      alert("請將欄位補齊");
+    }else{
+      if(MON != false || TUE != false || WED != false || THU != false || FRI != false || SAT != false || SUN != false){
+        reminder_all.push(newContact);
+        window.localStorage.setItem('reminder_all', JSON.stringify(reminder_all));
+        location.reload();
+      }else{
+        alert("請將欄位補齊");
+      }
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="content_banner">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+          <button type="button" class="back_button" onclick="location.href='index.html'"></button>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand" href="#">藥記得</span>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="find_bitterly.html">找痛痛</a></li>
+            <li><a href="search.html">搜一下</a></li>
+            <li><a href="useful.html">超好用</a></li>
+            <li><a href="user_symptom.html">老症頭</a></li>
+            <li class="active"><a href="reminder.html">藥記得</a></li>
+            <li><a href="incompatible_food.html">物物相剋</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </nav>
+    </div>
+    <div class="content">
+      <div id="reminder_all2">
+        <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+              確定刪除？
+              <button type="button" class="btn btn-default btn-danger" id="old_delete">確定</button>
+              <button type="button" class="btn btn-default btn-danger" id="cancel" data-dismiss="modal">取消</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">修改提醒</h4>
+            </div>
+            <div class="modal-body">
+              藥品名稱：
+              <input type="text" id="Name_edit">
+              <br/><br/>
+              藥量：
+              <select id="quantity_edit">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <select id="unit_edit">
+                <option type="radio" value="包">包
+                <option type="radio" value="顆">顆
+                <option type="radio" value="匙">匙
+                <option type="radio" value="瓶">瓶
+                <option type="radio" value="cc">cc
+              </select>
+              <br/><br/>
+              提醒時間：
+              <input type="time" id="Time_edit">
+              <br/><br/>
+              <div id="week_edit">
+                <input type="checkbox" id="MON_edit"><label for="MON_edit">一</label>
+                <input type="checkbox" id="TUE_edit"><label for="TUE_edit">二</label>
+                <input type="checkbox" id="WED_edit"><label for="WED_edit">三</label>
+                <input type="checkbox" id="THU_edit"><label for="THU_edit">四</label>
+                <input type="checkbox" id="FRI_edit"><label for="FRI_edit">五</label>
+                <input type="checkbox" id="SAT_edit"><label for="SAT_edit">六</label>
+                <input type="checkbox" id="SUN_edit"><label for="SUN_edit">七</label>
+              </div> 
+              <button type="button" class="btn btn-default btn-danger" id="old_edit">修改</button>
+              <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">新增提醒</h4>
+            </div>
+            <div class="modal-body">
+              藥品名稱：
+              <input type="text" id="Name">
+              <br/><br/>
+              藥量：
+              <select id="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <select id="unit">
+                <option type="radio" value="包">包
+                <option type="radio" value="顆">顆
+                <option type="radio" value="匙">匙
+                <option type="radio" value="瓶">瓶
+                <option type="radio" value="cc">cc
+              </select> 
+              <br/><br/>
+              提醒時間：
+              <input type="time" id="Time">
+              <br/><br/>
+              <div id="week">
+                <input type="checkbox" id="MON"><label for="MON">一</label>
+                <input type="checkbox" id="TUE"><label for="TUE">二</label>
+                <input type="checkbox" id="WED"><label for="WED">三</label>
+                <input type="checkbox" id="THU"><label for="THU">四</label>
+                <input type="checkbox" id="FRI"><label for="FRI">五</label>
+                <input type="checkbox" id="SAT"><label for="SAT">六</label>
+                <input type="checkbox" id="SUN"><label for="SUN">日</label>
+              </div> 
+              <button type="button" class="btn btn-default btn-danger" onclick="addnew();">新增</button>
+              <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="reminder_btn" data-toggle="modal" data-target="#addnew">+</button>
+  </div>
+</body>
+</html>

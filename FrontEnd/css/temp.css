@@ -1,0 +1,20 @@
+.incompatible_food{
+	margin-top: 9vh;
+	height: 91vh;
+	width: 100vw;
+	background-image: url('../images/incompatible_food.png');
+  	background-position:center;
+  	background-size: cover ;
+  	background-repeat: no-repeat;
+}
+.incompatible_food_content{
+	text-align: left;
+	margin-top: 9vh;
+	background-color: white;
+	height: 50vh;
+	width: 80vw;
+	margin: 0 auto;
+	font-size: 2rem;
+ 	line-height: 3rem;
+  	text-align: left;
+ }

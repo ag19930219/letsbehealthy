@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta charset="UTF-8">
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/all.css" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+  <script type="text/javascript" src="js/markerclusterer.js"></script>
+  <title>公廁資訊</title>
+  <script>
+  setTimeout(function(){ $( document ).ready(toilet()); }, 3500);
+
+var my_latlng;
+var coords;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var public_toilet_info;
+var markerClusterer_publictoilet = [];   // 設定標記叢集 (marker clusterer)
+var markerClusterDraw_publictoilet = [];
+var publictoilet_bind = 0;
+var status_publictoilet = 0;
+var infoWindow_public_toilet = new google.maps.InfoWindow();
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+          coords = position.coords;
+          my_latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+          var myOptions = {
+              zoom: 15,   
+              center: my_latlng, 
+              mapTypeId: google.maps.MapTypeId.ROADMAP 
+          };
+          map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+          var marker = new google.maps.Marker({
+              position: my_latlng,
+              map: map
+          });
+      });
+  } else {
+      alert("你的瀏覽器不支持地理資訊獲取");
+  }
+}
+function toilet(){
+  $.ajax({
+    url : "http://140.127.218.205/hospital/toilet_distance.php?lat="+ coords.latitude +"&lng="+coords.longitude,
+    success : function(toilet_distance) {
+      var toilet_distance_result = $.parseJSON(toilet_distance);
+      console.log(toilet_distance_result);
+      for ( var flag = 0; flag < toilet_distance_result.length; flag++) {
+        var toilet_name_publictoilet = toilet_distance_result[flag].T_name;
+        var address_publictoilet = toilet_distance_result[flag].Address;
+        var distance_publictoilet = toilet_distance_result[flag].distance;
+        var point_publictoilet = new google.maps.LatLng(parseFloat(toilet_distance_result[flag].lat), parseFloat(toilet_distance_result[flag].lng));
+        var html_publictoilet = "<h3>" + toilet_name_publictoilet + "</h3><p>"+ address_publictoilet + "</p><p>距離：" + distance_publictoilet +"公里</p>";
+        
+        var marker_publictoilet = new google.maps.Marker({
+            map : map,
+            position : point_publictoilet,
+            icon : 'images/publictoilet_logo.png'
+        });
+        // 把對話框內容綁到地圖標記上頭
+        bindInfoWindow(marker_publictoilet, map, infoWindow_public_toilet, html_publictoilet); 
+        // 先把所有要做成標記叢集 (marker clusterer) 的標記通通塞進一個集合 (collection)
+        markerClusterer_publictoilet.push(marker_publictoilet); 
+      }
+    }
+  });
+}
+function bindInfoWindow(marker, map, infoWindow, html) {
+    // 除了 click 事件，也可以用 mouseover 等事件觸發氣泡框顯示
+    google.maps.event.addListener(marker, 'click', function() { 
+        infoWindow.setContent(html);
+        infoWindow.open(map, marker);
+    });
+}
+  </script>
+</head>
+<body onload="initialize();">
+  <div class="wrap">
+    <div class="content_banner">
+      <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="back_button" onclick="history.back();"></button>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <span class="navbar-brand" href="#">公廁資訊</span>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">首頁</a></li>
+                <li><a href="find_bitterly.html">找痛痛</a></li>
+                <li class="active"><a href="search.html">搜一下</a></li>
+                <li><a href="useful.html">超好用</a></li>
+                <li><a href="user_symptom.html">老症頭</a></li>
+                <li><a href="reminder.html">藥記得</a></li>
+                <li><a href="incompatible_food.html">物物相剋</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+      </div>
+    <div class="map_container">
+      <div class="mappic">
+        <div id="map_canvas"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

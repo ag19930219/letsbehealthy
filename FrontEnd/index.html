@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+	<link href="css/all.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, user-scalable=yes" />
+	<title>首頁</title>
+  <script type="text/javascript">
+var my_latlng;
+var coords;
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+          coords = position.coords;
+          my_latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+          //console.log(my_latlng);
+          $.ajax({ //醫院
+            url: "http://140.127.218.205/hospital/PSI_distance.php?&lat="+ coords.latitude +"&lng="+coords.longitude,
+            type: "GET",
+            dataType: "json",
+            success: function (Jdata) {
+              var Xurl = "http://opendata.epa.gov.tw/ws/Data/REWXQA/?$filter=SiteName eq '"+Jdata[0].SiteName+"'&$orderby=SiteName&$skip=0&$top=1000&$format=json"
+                $.ajax({
+                  url: Xurl,
+                  type: "GET",
+                  dataType: "json",
+                  success: function(Pdata) {      //抓回來的資料會存在Jdata陣列中
+                      //資料裡面有甚麼可以直接參考農委會的API介接說明書，或者觀看JSON碼裡面的資料
+                      console.log(Pdata[0]);
+                      alert("距離您最近的空氣品質測站："+Pdata[0].SiteName+"\nPSI："+Pdata[0].PSI+"\nPM2.5："+Pdata[0]["PM2.5"]+" μg/m3\n空氣汙染指標："+Pdata[0].Status+"");
+                  }
+                });            
+              }
+          });
+        });
+      }
+    }
+  </script>
+</head>
+<body onload="initialize();">
+  <div class="wrap">
+    <div class="index_banner">
+      <span>醫起藥健康</span>
+      <a href="information.html"><span class="information_icon">
+        <img src="images/information.png">
+      </span></a>
+    </div>
+
+    <div class="index_img">
+      <img src="images/index_hospital.png" style="height:100%;width:100%;">
+    </div>
+
+    <div class="index_btn_top">
+      <div class="index_btn_child">
+          <a href="find_bitterly.html" class="btn primary index_circle">
+            <img src="images/find_bitterly.png" class="index_icon"><br/>
+            找痛痛
+          </a>
+          </div>
+          <div class="index_btn_child">
+            <a href="search.html" class="btn primary index_circle">
+            <img src="images/search.png" class="index_icon"><br/>
+            搜一下
+          </a>
+          </div>
+          <div class="index_btn_child">
+            <a href="reminder.html" class="btn primary index_circle">
+            <img src="images/reminder.png" class="index_icon"><br/>
+            藥記得
+          </a>
+          </div>
+      </div>
+      <div class="index_btn_bottom">
+          <div class="index_btn_child">
+            <a href="useful.html" class="btn primary index_circle">
+            <img src="images/user_need.png" class="index_icon"><br/>
+            超好用
+          </a>
+          </div>
+          <div class="index_btn_child">
+            <a href="incompatible_food.html" class="btn primary index_circle">
+            <img src="images/ill_match.png" class="index_icon"><br/>
+            物物相剋
+          </a>
+          </div>
+          <div class="index_btn_child">
+            <a href="user_symptom.html" class="btn primary index_circle">
+            <img src="images/user_symptom.png" class="index_icon"><br/>
+            老症頭
+          </a>
+          </div>
+      </div>
+
+  </div>
+</body>
+</html>

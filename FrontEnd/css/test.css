@@ -1,0 +1,79 @@
+#home {
+  margin: 0;
+  padding: 0;
+}
+.ui-content {
+  height: 90vh;
+  padding: 0;
+  margin-top: 6vh;
+  overflow: hidden;
+  -webkit-perspective: 800;
+  -moz-perspective: 800;
+  perspective: 800;
+}
+@media only screen and (max-width: 599px) {
+  .ui-content {
+    height: 86vh;
+    padding: 0;
+    margin-top: 8vh;
+    overflow: hidden;
+    -webkit-perspective: 800;
+    -moz-perspective: 800;
+    perspective: 800;
+  }
+}
+#box {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  margin: 0 auto 0;
+  cursor:pointer;
+  -webkit-perspective-origin: 50% 50%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform: rotateY(0deg);
+  -moz-perspective-origin: 50% 50%;
+  -moz-transform-style: preserve-3d;
+  -moz-transform: rotateY(0deg);
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: all .5s;
+}
+@media only screen and (max-width: 599px) {
+  #box {
+    position: relative;
+    width: 100vw;
+    height: 85vh;
+    margin: 0 auto 0;
+    cursor:pointer;
+    -webkit-perspective-origin: 50% 50%;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transform: rotateY(0deg);
+    -moz-perspective-origin: 50% 50%;
+    -moz-transform-style: preserve-3d;
+    -moz-transform: rotateY(0deg);
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: all .5s;
+  }
+}
+.box-child {
+  width: 100vw;
+  height: 85vh;
+  border: 1px solid #000;
+  position: absolute;
+  text-align: center;
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+#box1 {
+  background: rgba(255, 255, 255, .5);
+}
+#box2 {
+  background: rgba(255, 255, 255, .5);
+}
+#box3 {
+  background: rgba(255, 255, 255, .5);
+}

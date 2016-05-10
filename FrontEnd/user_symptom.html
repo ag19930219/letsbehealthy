@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta charset="UTF-8">
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/all.css" rel="stylesheet">
+	<title>老症頭</title>
+<script type="text/javascript">
+  var edit_index;
+  var jsonString = window.localStorage.getItem('user_symptom');
+  var user_symptom = JSON.parse(jsonString);
+
+    if (user_symptom==null || typeof(user_symptom)!=='object') {
+      // 輸出 Log 與建立資料庫
+        var user_symptom = {Respiratory:1,Urinary:1};
+        var jsonString = JSON.stringify(user_symptom);
+        window.localStorage.setItem('user_symptom', jsonString);
+    }else{
+      console.log(user_symptom.Urinary);
+      if(user_symptom.Respiratory==1){
+        //console.log("OK");
+        setTimeout("Respiratory();", 200 )
+      }
+      if(user_symptom.Urinary==1){
+        setTimeout("Urinary();", 200 )
+      }
+    }
+  function Respiratory(){
+    $('#Respiratory').attr("checked", true);
+  }
+  function Urinary(){
+    $('#Urinary').attr("checked", true);
+  }
+  function modify(){
+    if($("#Respiratory").prop("checked")==true){
+      user_symptom.Respiratory=1;
+    }else{
+      user_symptom.Respiratory=0;
+    }
+    if($("#Urinary").prop("checked")==true){
+      user_symptom.Urinary=1;
+    }else{
+      user_symptom.Urinary=0;
+    }
+    window.localStorage.setItem('user_symptom', JSON.stringify(user_symptom));
+    location.reload();
+  }
+</script>
+</head>
+<body>
+  <div class="wrap user_symptom">
+    <div class="content_banner">
+    	<nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+          <button type="button" class="back_button" onclick="location.href='index.html'"></button>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand" href="#">老症頭</span>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="find_bitterly.html">找痛痛</a></li>
+            <li><a href="search.html">搜一下</a></li>
+            <li><a href="useful.html">超好用</a></li>
+            <li class="active"><a href="user_symptom.html">老症頭</a></li>
+            <li><a href="reminder.html">藥記得</a></li>
+            <li><a href="incompatible_food.html">物物相剋</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </nav>
+    </div>
+  	<div class="content_container user_symptom_content">
+    	<div class="row clearfix">
+    		<div class="col-md-12 column text-center">
+          <form action="http://letusbehealth.no-ip.org/user_symptom_modify.php" method="GET">
+      		  <div class="symptom_checkbox">
+              <label>
+                <input type="checkbox" name="Respiratory" value="true" id="Respiratory">
+                我有呼吸道方面的疾病
+              </label>
+            </div>
+            <div class="symptom_checkbox">
+              <label>
+                <input type="checkbox" name="Urinary" value="true" id="Urinary">
+                我有泌尿道方面的疾病
+              </label>
+            </div>
+            <button id="ok" type="button" class="btn btn-primary btn-lg" onclick="modify()">修改</button>
+          </form>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</body>
+</html>
