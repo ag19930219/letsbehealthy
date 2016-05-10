@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link href="css/jquery.mobile-1.4.5.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/jquery.rwdImageMaps.min.js"></script>
+  <link href="css/all.css" rel="stylesheet">
+  <link href="css/test.css" rel="stylesheet">
+	<script src="js/test.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, user-scalable=yes" />
+	<title>找痛痛</title>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
+      $('img[usemap]').rwdImageMaps();
+    });
+  </script>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="content_banner">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="back_button" onclick="location.href='index.html'" target="_self"></button>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand" href="#">找痛痛</span>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html" target="_self">首頁</a></li>
+            <li class="active"><a href="find_bitterly.html" target="_self">找痛痛</a></li>
+            <li><a href="search.html" target="_self">搜一下</a></li>
+            <li><a href="useful.html">超好用</a></li>
+            <li><a href="user_symptom.html" target="_self">老症頭</a></li>
+            <li><a href="reminder.html" target="_self">藥記得</a></li>
+            <li><a href="incompatible_food.html" target="_self">物物相剋</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+
+  <div class="find_bitterly_container">
+    <button class="not_found" onclick="javascript:location.href='not_found.html'">點不到請按我</button>
+    <div id="home" data-role="page">
+      <div role="main" class="ui-content">
+        <div id="box" onselectstart="return false">
+          <div id="box1" class="box-child">
+            <img src="images/girl.png" style="height:88%;" usemap="#m_girl">
+            <map name="m_girl" id="m_girl">
+              <area shape="poly" coords="101,648,101,695,113,841,111,903,111,955,111,990,115,1017,89,1018,77,1022,79,1036,87,1040,96,1040,104,1043,123,1041,141,1037,152,1034,146,1019,154,997,170,883,175,844,171,832,194,719,222,833,227,875,232,909,236,943,237,970,239,998,245,1017,249,1027,247,1035,261,1039,271,1041,286,1042,300,1042,315,1033,319,1027,311,1019,292,1017,279,1013,283,989,281,931,283,854,279,849,287,775,294,672,291,653,199,721" href="find_bitterly_result.html?d_catagory=皮膚科" target="_self" alt="" onclick="alert('您點選了皮膚，為您查詢皮膚科！');" onfocus="blur();"/>
+              <area shape="poly" coords="176,341,176,347,109,367,18,496,15,508,18,532,28,630,24,644,24,648,27,651,29,651,31,652,31,655,32,658,35,658,41,658,43,655,43,659,45,664,49,666,53,665,55,659,55,657,57,656,62,656,63,651,63,647,64,646,69,645,73,642,72,636,62,618,62,519,126,420,132,420,264,421,286,447,286,459,326,516,324,614,314,634,315,642,322,642,326,638,326,649,328,652,332,652,332,658,334,662,340,661,343,652,346,656,352,654,355,647,360,647,361,637,358,629,371,505,369,496,283,368,218,350,216,339" href="find_bitterly_result.html?d_catagory=皮膚科" target="_self" alt="" onclick="alert('您點選了皮膚，為您查詢皮膚科！');" onfocus="blur();"/>
+              <area shape="poly" coords="159,280,162,281,165,282,167,283,172,284,176,284,180,285,186,286,192,286,198,285,203,286,209,285,214,284,217,284,220,284,226,283,229,282,232,282,233,281,234,281,234,285,233,288,232,290,231,292,230,295,229,298,228,299,225,303,224,305,223,308,220,310,218,314,214,316,211,318,208,320,203,322,197,323,192,322,186,321,181,319,176,316,171,309,165,301,162,292,159,281" href="find_bitterly_result.html?d_catagory=耳鼻喉科" target="_self" alt="" onclick="alert('您點選了嘴巴，為您查詢耳鼻喉科！');" onfocus="blur();"/>
+              <area shape="circle" coords="250,204, 21" href="find_bitterly_result.html?d_catagory=眼科" target="_self" alt="" onclick="alert('您點選了眼睛，為您查詢眼科！');" onfocus="blur();"/>
+              <area shape="circle" coords="129,204, 20" href="find_bitterly_result.html?d_catagory=眼科" target="_self" alt="" onclick="alert('您點選了眼睛，為您查詢眼科！');" onfocus="blur();"/>
+            </map>
+          </div>
+          <div id="box2" class="box-child">
+            <img src="images/body_organ.png" style="height:88%;" onfocus="blur();" usemap="#m_body_organ">
+            <map name="m_body_organ" id="m_body_organ">
+              <area shape="poly" coords="250,569,259,575,267,584,269,595,270,609,266,618,259,625,250,627,243,622,239,615,242,606,245,599,243,594,237,592,234,584,236,576,241,571,247,569,250,569" href="find_bitterly_result.html?d_catagory=一般內科" target="_self" alt="" onclick="alert('您點選了腎臟，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="124,574,113,585,110,593,108,605,109,615,115,624,122,629,131,630,137,621,140,613,134,605,136,597,143,594,144,588,142,577,135,572,124,574" href="find_bitterly_result.html?d_catagory=一般內科" target="_self" alt="" onclick="alert('您點選了腎臟，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="215,528,224,525,236,528,241,531,248,540,252,548,253,556,251,564,250,569,240,571,236,575,235,579,235,586,236,590,237,593,243,594,244,600,244,605,240,610,239,616,241,621,247,627,254,628,251,635,248,636,250,639,249,645,246,649,249,656,246,662,248,666,249,672,247,677,244,679,242,684,236,690,233,690,230,694,222,697,217,693,217,690,211,692,203,690,201,688,197,690,201,692,203,697,199,704,193,716,189,720,186,718,185,710,185,699,184,692,187,690,190,689,186,687,181,687,177,679,172,675,169,670,173,665,166,661,162,658,156,658,152,663,149,673,141,675,138,669,134,661,134,653,137,649,133,646,133,638,132,629,138,620,140,613,138,610,134,605,135,597,145,593,156,584,170,588,189,585,197,572,199,562,201,555,214,548,222,539,223,535,221,531,215,528" href="find_bitterly_result.html?d_catagory=內科" target="_self" alt="" onclick="alert('您點選了腸胃，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="223,533,221,540,216,544,212,549,206,551,204,552,195,557,187,558,186,562,185,566,183,564,180,559,176,563,170,567,165,572,159,576,152,582,150,583,148,586,146,590,145,590,144,581,140,575,134,572,129,572,126,573,123,562,122,556,122,544,126,536,131,530,137,526,144,524,151,524,190,527,210,529,223,533" href="find_bitterly_result.html?d_catagory=內科" target="_self" alt="" onclick="alert('您點選了肝，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="192,423,188,425,189,430,188,435,185,437,181,436,179,442,179,450,178,455,174,460,172,464,172,481,175,491,182,497,195,506,207,509,220,509,226,503,225,483,219,467,211,452,218,448,220,441,218,434,203,425,192,423" href="find_bitterly_result.html?d_catagory=內科" target="_self" alt="" onclick="alert('您點選了心臟，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="206,400,225,407,236,418,242,426,250,439,255,455,259,474,262,490,261,510,258,521,255,527,253,529,251,527,246,520,239,512,233,509,222,508,225,502,225,481,223,473,219,465,215,457,211,453,219,448,221,441,219,434,214,434,211,429,205,426,200,422,198,422,198,414,198,408,203,401,206,400" href="find_bitterly_result.html?d_catagory=內科" target="_self" alt="" onclick="alert('您點選了肺，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="170,400,154,405,142,415,134,424,126,438,120,454,117,470,115,489,115,511,119,524,123,529,137,513,147,508,167,507,174,503,174,493,171,478,171,470,172,462,173,457,175,432,178,414,175,404,170,400" href="find_bitterly_result.html?d_catagory=內科" target="_self" alt="" onclick="alert('您點選了肺，為您查詢內科！');" onfocus="blur();"/>
+              <area shape="poly" coords="149,286,172,291,187,291,206,290,224,286,220,300,214,312,206,321,196,327,188,327,176,325,164,318,157,307,149,286" href="find_bitterly_result.html?d_catagory=耳鼻喉科" target="_self" alt="" onfocus="blur();"/>
+              <area shape="circle" coords="240,209, 19" href="find_bitterly_result.html?d_catagory=眼科" target="_self" alt="" onclick="alert('您點選了眼睛，為您查詢眼科！');" onfocus="blur();"/>
+              <area shape="circle" coords="121,209, 20" href="find_bitterly_result.html?d_catagory=眼科" target="_self" alt="" onclick="alert('您點選了眼睛，為您查詢眼科！');" onfocus="blur();"/>
+            </map>
+          </div>
+          <div id="box3" class="box-child">
+            <a href="find_bitterly_result.html?d_catagory=骨科" target="_self" onclick="alert('您點選了骨骼，為您查詢骨科！');"><img src="images/skeleton.png" style="height:88%;"></a>
+          </div>
+        </div>
+      </div>
+
+      <div data-role="footer" data-theme="b">
+        <div data-role="navbar">
+          <ul>
+            <li id="b1">
+              <a data-theme="b" class="ui-btn-active ui-state-persist">皮膚層</a>
+            </li>
+            <li id="b2">
+              <a data-theme="b">器官層</a>
+            </li>
+            <li id="b3">
+              <a data-theme="b">骨骼</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   </div>
+
+</div>
+
+</body>
+</html>
