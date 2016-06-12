@@ -18,7 +18,15 @@
   var temp = Nurl.split("?");          //將網址”?”移除並切割
   var vars = temp[1];                 //此為問號後的變數
   //console.log(vars);
-  var Xurl = "http://140.127.218.205/hospital/searchkey.php?"+vars; //
+  /*IP處請填入主機之IP*/
+  var Xurl = "http://IP/hospital/searchkey.php?"+vars; //
+
+  var temp2 = vars.split("&");
+  var vars1 = temp2[1];
+  var temp3 = vars1.split("=");
+  var vars3 = temp3[1]; 
+  var county = decodeURI(vars3); //county
+  console.log(county);
   $.ajax({
   url: Xurl,
   type: "GET",
@@ -38,7 +46,8 @@
       document.getElementById("loading").style.display = "none";
   }
 });
-  var Xurl2 = "http://140.127.218.205/hospital/searchkey_clinic.php?"+vars; //
+/*IP處請填入主機之IP*/
+  var Xurl2 = "http://IP/hospital/searchkey_clinic.php?"+vars; //
   $.ajax({
   url: Xurl2,
   type: "GET",
@@ -50,9 +59,9 @@
       var tr;
       for (var i = 0; i < Jdata.length; i++) {
         if(Jdata[i].C_code==0){
-          $('#list2').append("<div class='find_search'><button type='button' class='search_notice' data-toggle='modal' data-target='#delete_modal'></button><a href='map_clinic.html?"+Jdata[i].Address+"&Telphone="+Jdata[i].Telphone+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'></div></a></div>");
+          $('#list2').append("<div class='find_search'><button type='button' class='search_notice' data-toggle='modal' data-target='#delete_modal'></button><a href='map_clinic.html?"+Jdata[i].Address+"&Telephone="+Jdata[i].Telephone+"&county="+county+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'></div></a></div>");
         }else{
-          $('#list2').append("<div class='find_search'><a href='map_clinic.html?"+Jdata[i].Address+"&Telphone="+Jdata[i].Telphone+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'></div></a></div>");
+          $('#list2').append("<div class='find_search'><a href='map_clinic.html?"+Jdata[i].Address+"&Telephone="+Jdata[i].Telephone+"&county="+county+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'></div></a></div>");
         }
         
       }

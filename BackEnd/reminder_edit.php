@@ -46,7 +46,7 @@
   }else{
     $SUN = 0;
   }
-  $link=mysqli_connect('localhost','root','','hospital');
+  $link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
   mysqli_query($link,"SET NAMES UTF8");
   $sql="UPDATE reminder SET Name='$Name',quantity='$quantity',unit='$unit',Time='$Time',MON='$MON',TUE='$TUE',WED='$WED',THU='$THU',FRI='$FRI',SAT='$SAT',SUN='$SUN' WHERE no='$no'";
   mysqli_query($link,$sql) or die ("無法更新".mysql_error());

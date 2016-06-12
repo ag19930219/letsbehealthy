@@ -6,7 +6,7 @@
     <title>醫起藥健康 - 詳細資訊</title>
 <?php
 $H_sn=$_GET['H_sn'];
-$link=mysqli_connect('localhost','root','','hospital');
+$link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
 mysqli_query($link,"SET NAMES UTF8");
 $sql="SELECT * FROM hospital WHERE H_sn=$H_sn";
 mysqli_query($link,"SET NAMES UTF8");

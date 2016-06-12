@@ -1,7 +1,7 @@
 <?php
   $lat=$_GET['lat'];
   $lng=$_GET['lng'];
-  $link=mysqli_connect('localhost','root','','hospital');
+  $link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
   mysqli_query($link,"SET NAMES UTF8");
   $sql="SELECT * FROM air ";
   $result=mysqli_query($link,$sql);

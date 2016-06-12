@@ -6,7 +6,7 @@
   $d_catagory=$_GET['d_catagory'];
   @$lat=$_GET['lat'];
   @$lng=$_GET['lng'];
-  $link=mysqli_connect('localhost','root','','hospital');
+  $link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
   mysqli_query($link,"SET NAMES UTF8");
   if($county=="台北市"){
     $county="臺北市";

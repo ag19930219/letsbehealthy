@@ -4,7 +4,7 @@
   @$District=$_GET['District'];
   @$zipcode=$_GET['zipcode'];
   @$d_catagory=$_GET['d_catagory'];
-  $link=mysqli_connect('localhost','root','','hospital');
+  $link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
   mysqli_query($link,"SET NAMES UTF8");
   if($Country=="台北市"){
     $Country="臺北市";

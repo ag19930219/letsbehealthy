@@ -9,7 +9,7 @@
 <?php
 $city=$_POST['city'];
 $section=$_POST['section'];
-	$link=mysqli_connect('localhost','root','','hospital');
+	$link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
 	mysqli_query($link,"SET NAMES UTF8");
   if($section!=NULL){       //如果有選鄉鎮市區
     $sql_search="SELECT zip FROM zip WHERE (city='$city' AND section='$section')";

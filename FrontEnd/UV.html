@@ -58,8 +58,9 @@ function initialize() {
               mapTypeId: google.maps.MapTypeId.ROADMAP 
           };
           map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+          /*IP處請填入主機之IP*/
           $.ajax({ //醫院
-            url: "http://140.127.218.205/hospital/UV_distance.php?&lat="+ coords.latitude +"&lng="+coords.longitude,
+            url: "http://IP/hospital/UV_distance.php?&lat="+ coords.latitude +"&lng="+coords.longitude,
             type: "GET",
             dataType: "json",
             success: function (Jdata) {

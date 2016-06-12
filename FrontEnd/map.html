@@ -86,15 +86,17 @@ function initialize() {
       alert("你的瀏覽器不支持地理資訊獲取");
   }
 }
+
+/*IP處請填入主機之IP*/
 function toilet(){
     $.ajax({
-      url: "http://140.127.218.205/hospital/user_symptom_history.php?UUID="+UUID,
+      url: "http://IP/hospital/user_symptom_history.php?UUID="+UUID,
       type: "GET",
       dataType: "json",
       success: function (history) {
         if(history[0].Urinary==1){
           $.ajax({
-            url : "http://140.127.218.205/hospital/toilet_distance.php?lat="+ coords.latitude +"&lng="+coords.longitude,
+            url : "http://IP/hospital/toilet_distance.php?lat="+ coords.latitude +"&lng="+coords.longitude,
             success : function(toilet_distance) {
               var toilet_distance_result = $.parseJSON(toilet_distance);
               //console.log(toilet_distance_result);

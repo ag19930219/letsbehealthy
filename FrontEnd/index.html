@@ -21,8 +21,9 @@ function initialize() {
           coords = position.coords;
           my_latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
           //console.log(my_latlng);
+          /*IP處請填入主機之IP*/
           $.ajax({ //醫院
-            url: "http://140.127.218.205/hospital/PSI_distance.php?&lat="+ coords.latitude +"&lng="+coords.longitude,
+            url: "http://IP/hospital/PSI_distance.php?&lat="+ coords.latitude +"&lng="+coords.longitude,
             type: "GET",
             dataType: "json",
             success: function (Jdata) {

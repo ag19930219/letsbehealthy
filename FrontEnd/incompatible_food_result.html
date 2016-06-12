@@ -45,7 +45,8 @@
   var temp2 = vars.split("=");
   var temp3 = temp2[1].split("+");
   var vars2 = decodeURIComponent(temp3[0]);
-  var Xurl = "http://140.127.218.205/hospital/incompatible_food_result.php?"+vars; 
+  /*IP處請填入主機之IP*/
+  var Xurl = "http://IP/hospital/incompatible_food_result.php?"+vars; 
   $(document).ready(
       function(){
         $('#food_header').append("與「"+vars2+"」相剋的食物");

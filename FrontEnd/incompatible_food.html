@@ -11,8 +11,9 @@
 	<script type="text/javascript">
 	$(document).ready(
         function(){
+      /*IP處請填入主機之IP*/
 			$.ajax({	//抓食物
-		    	url : "http://140.127.218.205/hospital/incompatible_food_class.php",   // JSON 資料路徑
+		    	url : "http://IP/hospital/incompatible_food_class.php",   // JSON 資料路徑
 		    	success : function(data_class) {	
 		    		data_class_result = $.parseJSON(data_class);
 					for (var flag = 0; flag < data_class_result.length; flag++) {

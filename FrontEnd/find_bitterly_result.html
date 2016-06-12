@@ -34,6 +34,8 @@ function initialize() {
       navigator.geolocation.getCurrentPosition(function (position) {
           coords = position.coords;
           latlng = [coords.latitude, coords.longitude];
+          console.log(latlng);
+          my_latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
           $.getJSON(
               'https://maps.googleapis.com/maps/api/geocode/json',
               {
@@ -55,7 +57,7 @@ function initialize() {
                       }
                   }
           });
-          my_latlng = new google.maps.LatLng(coords.latitude, coords.longitude);
+          
           //console.log(my_latlng);
           setTimeout( search2, 500);
       });
@@ -63,10 +65,10 @@ function initialize() {
       alert("請開啟手機定位功能");
   }
 }
-
+/*IP處請填入主機之IP*/
 function search2(){
   $.ajax({ //醫院
-    url: "http://140.127.218.205/hospital/find_search.php?"+vars+"&lat="+ coords.latitude +"&lng="+coords.longitude+"&county="+county,
+    url: "http://IP/hospital/find_search.php?"+vars+"&lat="+ coords.latitude +"&lng="+coords.longitude+"&county="+county,
     type: "GET",
     dataType: "json",
     success: function (Jdata) {
@@ -84,16 +86,17 @@ function search2(){
           console.log(county);
         }
   });
+/*IP處請填入主機之IP*/
   $.ajax({ //診所
-    url: "http://140.127.218.205/hospital/find_search_clinic.php?"+vars+"&lat="+ coords.latitude +"&lng="+coords.longitude+"&county="+county,
+    url: "http://IP/hospital/find_search_clinic.php?"+vars+"&lat="+ coords.latitude +"&lng="+coords.longitude+"&county="+county,
     type: "GET",
     dataType: "json",
     success: function (Jdata) {
         for (var i = 0; i < Jdata.length; i++) {
           if(Jdata[i].C_code==0){
-            $('#list2').append("<div class='find_search'><button type='button' class='search_notice' data-toggle='modal' data-target='#delete_modal'></button><a href='map_clinic.html?"+Jdata[i].Address+"&Telphone="+Jdata[i].Telphone+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'><div class='H_distance'>" + Jdata[i].distance.toFixed(2) + "</br>公里</div></div></a></div>");
+            $('#list2').append("<div class='find_search'><button type='button' class='search_notice' data-toggle='modal' data-target='#delete_modal'></button><a href='map_clinic.html?"+Jdata[i].Address+"&Telephone="+Jdata[i].Telephone+"&county="+county+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'><div class='H_distance'>" + Jdata[i].distance.toFixed(2) + "</br>公里</div></div></a></div>");
           }else{
-            $('#list2').append("<div class='find_search'><a href='map_clinic.html?"+Jdata[i].Address+"&Telphone="+Jdata[i].Telephone+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'><div class='H_distance'>" + Jdata[i].distance.toFixed(2) + "</br>公里</div></div></a></div>");
+            $('#list2').append("<div class='find_search'><a href='map_clinic.html?"+Jdata[i].Address+"&Telephone="+Jdata[i].Telephone+"&county="+county+"' target='_self'><div class='find_search_left'><div class='H_name'>" + Jdata[i].C_name + "</div><div class='H_telphone'>" + Jdata[i].Telephone + "</div><div class='H_address'>" + Jdata[i].Address + "</div></div><div class='find_search_right'><div class='H_distance'>" + Jdata[i].distance.toFixed(2) + "</br>公里</div></div></a></div>");
           }
           }
           document.getElementById("loading").style.display = "none";

@@ -6,7 +6,7 @@
   @$d_catagory=$_GET['d_catagory'];
   @$lat=$_GET['lat'];
   @$lng=$_GET['lng'];
-  $link=mysqli_connect('localhost','root','','hospital');
+  $link=mysqli_connect('localhost','*','*','hospital'); /*星星處請填入資料庫帳號密碼*/
   mysqli_query($link,"SET NAMES UTF8");
   if($county == "彰化縣"){
     $sql="SELECT * FROM clinic_changhua WHERE Division LIKE '$d_catagory'";
@@ -119,5 +119,9 @@
   } 
   array_multisort($distance1,SORT_ASC,$return_arr,SORT_ASC);
 
+  if($distance1==[]){
+    echo json_encode($distance1);
+  }else{
   echo json_encode($return_arr);
+  }
 ?>

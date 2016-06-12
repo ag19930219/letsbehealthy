@@ -24,6 +24,10 @@ var vars1 = temp2[0];
 var vars2 = decodeURI(vars1); //address
 var temp3 = temp2[1].split("=");
 var vars3 = temp3[1]; //電話
+var temp4 = temp2[2].split("=");
+var county = temp4[1]; //county
+
+console.log(vars3);
 var my_latlng;
 var latlng;
 var coords;
@@ -38,7 +42,8 @@ var infoWindow_public_toilet = new google.maps.InfoWindow();
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
   $.ajax({
-      url : "http://140.127.218.205/hospital/clinic_detail.php?Telphone="+vars3,
+      /*IP處請填入主機之IP*/
+      url : "http://IP/hospital/clinic_detail.php?Telephone="+vars3+"&county="+county,
       success : function(clinic_detail) {
           var clinic_detail_result = $.parseJSON(clinic_detail);
           latlng = new google.maps.LatLng(clinic_detail_result[0].lat,clinic_detail_result[0].lng);
@@ -88,15 +93,16 @@ function initialize() {
       alert("你的瀏覽器不支持地理資訊獲取");
   }
 }
+/*IP處請填入主機之IP*/
 function toilet(){
   $.ajax({
-      url: "http://140.127.218.205/hospital/user_symptom_history.php?UUID="+UUID,
+      url: "http://IP/hospital/user_symptom_history.php?UUID="+UUID,
       type: "GET",
       dataType: "json",
       success: function (history) {
         if(history[0].Urinary==1){
           $.ajax({
-            url : "http://140.127.218.205/hospital/toilet_distance.php?lat="+ coords.latitude +"&lng="+coords.longitude,
+            url : "http://IP/hospital/toilet_distance.php?lat="+ coords.latitude +"&lng="+coords.longitude,
             success : function(toilet_distance) {
               var toilet_distance_result = $.parseJSON(toilet_distance);
               console.log(toilet_distance_result);
